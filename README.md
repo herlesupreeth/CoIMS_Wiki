@@ -13,11 +13,17 @@ Guide for overriding IMS settings to force enable VoLTE/VoWiFi using Carrier Pri
 - Gemalto SIM programmer
 
 ## Huge shout out and credits to following people for their awesome work
-- Martin Paljak for GlobalPlatformPro (gp.jar) - A tool to load and manage applets on compatible JavaCards from command line
-- Bertrand Martel for ARA-M applet (applet.cap) - ARA-M implementation for JavaCards. ARA-M is an application (typically present on a SIM card) which manage access rules that are enforced by an Access Control Enforcer (typically present on Android device). The enforcer makes sure the rules from the ARAM are enforced. An access rule is composed of an AID, a certificate hash (SHA1/SHA256 of client application cert) and a set of rules. The Access Control enforcer will allow/deny a client application (for example an Android app) to send APDU to a Secure Element (SE) applet based on these rules
+@martinpaljak for GlobalPlatformPro (gp.jar)
+
+A tool to load and manage applets on compatible JavaCards from command line
+
+@bertrandmartel for ARA-M applet (applet.cap)
+
+ARA-M implementation for JavaCards. ARA-M is an application (typically present on a SIM card) which manage access rules that are enforced by an Access Control Enforcer (typically present on Android device). The enforcer makes sure the rules from the ARAM are enforced. An access rule is composed of an AID, a certificate hash (SHA1/SHA256 of client application cert) and a set of rules. The Access Control enforcer will allow/deny a client application (for example an Android app) to send APDU to a Secure Element (SE) applet based on these rules
 
 ## Steps
-1. Install ARA-M Java Card applets on USIM/ISIM
+
+### Install ARA-M Java Card applets on USIM/ISIM
 
 In order to install and/or manage Java Card applets on your card make sure you have KIC1, KID1 and KIK1 keys. KIC1, KID1 and KIK1 could differ from one SIM card to another so make sure to have the correct keys. If you have a non-programmable USIM/ISIM with ARA-M application and have option to push certficates to ARA-M via OTA, skip Step 1 and proceed to Step 2
 
@@ -29,7 +35,7 @@ KIC1 | --key-enc
 KID1 | --key-mac
 KIK1 | --key-dek
 
-** Proceed with caution when installing applets on SIM card as it could brick your USIM/ISIM if incorrect KIC1, KID1 and KIK1 keys are used **
+**Proceed with caution when installing applets on SIM card as it could brick your USIM/ISIM if incorrect KIC1, KID1 and KIK1 keys are used**
 
 ```
 $ git clone https://github.com/herlesupreeth/CoIMS_Wiki
@@ -38,6 +44,7 @@ $ alias gp="java -jar $PWD/gp.jar"
 ```
 
 Please replace <KIC1>, <KID1> and <KIK1> with correct keys respective to your SIM card. The following command lists the details of the SIM card using the KIC1, KID1 and KIK1 keys and execution of it should not result in any error. If there is an error, please check the error and double check everything before proceeding
+
 ```
 $ gp --key-enc <KIC1> --key-mac <KID1> --key-dek <KIK1> -lvi
 ```
@@ -50,7 +57,9 @@ $ gp --key-enc <KIC1> --key-mac <KID1> --key-dek <KIK1> --unlock
 Example: A sysmoUSIM-SJS1-4ff USIM card with following keys is unlocked as follows
 
 KIC1 = --key-enc = 975B496CED1F2FB984145A55AB31A585
+
 KID1 = --key-mac = E7207B567F9D08726A6EFBD90C50DA9A
+
 KIK1 = --key-dek = DEAA4E9A9B3BC6FC5EFF77A8E9925632
 
 ```
@@ -63,7 +72,7 @@ Install the ARA-M applet (applet.cap) after unlocking. The following command mus
 $ gp --install applet.cap
 ```
 
-2. Push the SHA-1 certifcate of the Carrier Config Android app onto ARA-M in USIM/ISIM
+### Push the SHA-1 certifcate of the Carrier Config Android app onto ARA-M in USIM/ISIM
 
 The Carrier Config Android app which will be installed in next step is signed with following SHA1 key
 
@@ -112,7 +121,7 @@ RULE #0 :
 
 If you have a non-programmable USIM/ISIM with ARA-M application and have option to push certficates to ARA-M via OTA, push the above SHA1 certificate on to the SIM
 
-3. Install the Carrier Config Android app from Play Store
+### Install the Carrier Config Android app from Play Store
 
 Make sure the SIM card is placed in the default/first SIM slot of the device (only for multi-sim capable devices)
 
@@ -121,12 +130,12 @@ Use adb debugging with filter for "ims" keyword
 
 ## Potential reasons for this method not working
 1. If the value of CarrierIdentifier indicated in the app is -1 (i.e Unknown Carrier)
-	- If PLMN is on the following list [https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/master/assets/carrier_list.textpb]
+	- If PLMN is on the following list (https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/master/assets/carrier_list.textpb)
 		Resolution: Wait for vendor to release an update and hopefully it contains the updated carrier list
-	- If PLMN is not on the following list [https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/master/assets/carrier_list.textpb]
-		Resolution: Refer the following link [https://source.android.com/devices/tech/config/carrierid#integrating_carrier_ids_with_carrierconfig]
+	- If PLMN is not on the following list (https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/master/assets/carrier_list.textpb)
+		Resolution: Refer the following link (https://source.android.com/devices/tech/config/carrierid#integrating_carrier_ids_with_carrierconfig)
 
-2. Some devices with Samsung Exynos chipset and Mediatek chipset require ISIM, only USIM is not enough for SIP registrations
+2. Some devices with Samsung Exynos chipset/ Mediatek chipset require ISIM, only USIM is not enough for SIP registrations
 
 3. Does not seem to work on Samsung devices with Exynos chipset
 
