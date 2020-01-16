@@ -12,20 +12,21 @@ Guide for overriding IMS settings to force enable VoLTE/VoWiFi using Carrier Pri
 - OnePlus 5t UE with Android Pie
 - Gemalto SIM programmer
 
-## Huge shout out and credits to following people for their awesome work
-@martinpaljak for GlobalPlatformPro (gp.jar)
+## Big shout out and credits to following people for their awesome work
+<p align="justify">
+	@martinpaljak for GlobalPlatformPro (gp.jar) - A tool to load and manage applets on compatible JavaCards from command line
+</p>
 
-A tool to load and manage applets on compatible JavaCards from command line
-
-@bertrandmartel for ARA-M applet (applet.cap)
-
-ARA-M implementation for JavaCards. ARA-M is an application (typically present on a SIM card) which manage access rules that are enforced by an Access Control Enforcer (typically present on Android device). The enforcer makes sure the rules from the ARAM are enforced. An access rule is composed of an AID, a certificate hash (SHA1/SHA256 of client application cert) and a set of rules. The Access Control enforcer will allow/deny a client application (for example an Android app) to send APDU to a Secure Element (SE) applet based on these rules
+<p align="justify">
+	@bertrandmartel for ARA-M applet (applet.cap) - ARA-M implementation for JavaCards. ARA-M is an application (typically present on a SIM card) which manage access rules that are enforced by an Access Control Enforcer (typically present on Android device). The enforcer makes sure the rules from the ARAM are enforced. An access rule is composed of an AID, a certificate hash (SHA1/SHA256 of client application cert) and a set of rules. The Access Control enforcer will allow/deny a client application (for example an Android app) to send APDU to a Secure Element (SE) applet based on these rules
+</p>
 
 ## Steps
 
-### Install ARA-M Java Card applets on USIM/ISIM
-
-In order to install and/or manage Java Card applets on your card make sure you have KIC1, KID1 and KIK1 keys. KIC1, KID1 and KIK1 could differ from one SIM card to another so make sure to have the correct keys. If you have a non-programmable USIM/ISIM with ARA-M application and have option to push certficates to ARA-M via OTA, skip Step 1 and proceed to Step 2
+#### Install ARA-M Java Card applets on USIM/ISIM
+<p align="justify">
+	In order to install and/or manage Java Card applets on your card make sure you have KIC1, KID1 and KIK1 keys. KIC1, KID1 and KIK1 could differ from one SIM card to another so make sure to have the correct keys. If you have a non-programmable USIM/ISIM with ARA-M application and have option to push certficates to ARA-M via OTA, skip Step 1 and proceed to Step 2
+</p>
 
 Example: In sysmoUSIM-SJS1-4ff USIM cards, the key mappings for GlobalPlatformPro are as follows
 
@@ -43,13 +44,16 @@ $ cd CoIMS_Wiki
 $ alias gp="java -jar $PWD/gp.jar"
 ```
 
-Please replace <KIC1>, <KID1> and <KIK1> with correct keys respective to your SIM card. The following command lists the details of the SIM card using the KIC1, KID1 and KIK1 keys and execution of it should not result in any error. If there is an error, please check the error and double check everything before proceeding
+<p align="justify">
+	Please replace KIC1, KID1 and KIK1 with correct keys respective to your SIM card. The following command lists the details of the SIM card using the KIC1, KID1 and KIK1 keys and execution of it should not result in any error. If there is an error, please check the error and double check everything before proceeding
+</p>
 
 ```
-$ gp --key-enc <KIC1> --key-mac <KID1> --key-dek <KIK1> -lvi
+$ gp --key-enc KIC1 --key-mac KID1 --key-dek KIK1 -lvi
 ```
 
 It is always better to unlock the SIM card for easier installation of applet as follows
+
 ```
 $ gp --key-enc <KIC1> --key-mac <KID1> --key-dek <KIK1> --unlock
 ```
@@ -68,11 +72,12 @@ Default type=DES3 bytes=404142434445464748494A4B4C4D4E4F kcv=8BAF47 set as maste
 ```
 
 Install the ARA-M applet (applet.cap) after unlocking. The following command must execute without any errors.
+
 ```
 $ gp --install applet.cap
 ```
 
-### Push the SHA-1 certifcate of the Carrier Config Android app onto ARA-M in USIM/ISIM
+#### Push the SHA-1 certifcate of the Carrier Config Android app onto ARA-M in USIM/ISIM
 
 The Carrier Config Android app which will be installed in next step is signed with following SHA1 key
 
@@ -119,9 +124,11 @@ RULE #0 :
        APDU rule   : ALWAYS(0x01)
 ```
 
-If you have a non-programmable USIM/ISIM with ARA-M application and have option to push certficates to ARA-M via OTA, push the above SHA1 certificate on to the SIM
+<p align="justify">
+	If you have a non-programmable USIM/ISIM with ARA-M application and have option to push certficates to ARA-M via OTA, push the above SHA1 certificate on to the SIM
+</p>
 
-### Install the Carrier Config Android app from Play Store
+#### Install the Carrier Config Android app from Play Store
 
 Make sure the SIM card is placed in the default/first SIM slot of the device (only for multi-sim capable devices)
 
