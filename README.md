@@ -150,7 +150,7 @@ RULE #0 :
 
 **Make sure the SIM card is placed in the default/first SIM slot of the device (only for multi-sim capable devices)**
 
-Then download the Carrier Config Android app from play store (https://play.google.com/store/apps/details?id=com.sherle.coims). Run the app
+Download the "CoIMS" app from play store (https://play.google.com/store/apps/details?id=com.sherle.coims). Then, run the app
 
 Important points/values to note after running the app for this app to enable VoLTE
 
