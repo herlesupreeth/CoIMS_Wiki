@@ -148,7 +148,16 @@ RULE #0 :
 
 #### Step 5: Install the Carrier Config Android app from Play Store
 
-Make sure the SIM card is placed in the default/first SIM slot of the device (only for multi-sim capable devices)
+**Make sure the SIM card is placed in the default/first SIM slot of the device (only for multi-sim capable devices)**
+
+Then download the Carrier Config Android app from play store (https://play.google.com/store/apps/details?id=com.sherle.coims). Run the app
+
+Important points/values to note after running the app for this app to enable VoLTE
+
+- "App has Carrier Privileges" must be true
+- "SIM Carrier Id" must not be -1 (i.e Unknown Carrier)
+- "carrier_volte_provisioned_bool" must be true
+
 
 ## Debugging
 Use adb debugging with filter for "ims" keyword
