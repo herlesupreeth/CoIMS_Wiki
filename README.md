@@ -14,11 +14,11 @@ Guide for overriding IMS settings to force enable VoLTE/VoWiFi using Carrier Pri
 
 ## Big shout out and credits to following people for their awesome work
 <p align="justify">
-	@martinpaljak for GlobalPlatformPro (gp.jar) - A tool to load and manage applets on compatible JavaCards from command line
+	<a href="https://github.com/martinpaljak">Martin Paljak</a> for GlobalPlatformPro (gp.jar) - A tool to load and manage applets on compatible JavaCards from command line
 </p>
 
 <p align="justify">
-	@bertrandmartel for ARA-M applet (applet.cap) - ARA-M implementation for JavaCards. ARA-M is an application (typically present on a SIM card) which manage access rules that are enforced by an Access Control Enforcer (typically present on Android device). The enforcer makes sure the rules from the ARAM are enforced. An access rule is composed of an AID, a certificate hash (SHA1/SHA256 of client application cert) and a set of rules. The Access Control enforcer will allow/deny a client application (for example an Android app) to send APDU to a Secure Element (SE) applet based on these rules
+	<a href="https://github.com/bertrandmartel/aram-applet">Bertrand Martel</a> for ARA-M applet (applet.cap) - ARA-M implementation for JavaCards. ARA-M is an application (typically present on a SIM card) which manage access rules that are enforced by an Access Control Enforcer (typically present on Android device). The enforcer makes sure the rules from the ARAM are enforced. An access rule is composed of an AID, a certificate hash (SHA1/SHA256 of client application cert) and a set of rules. The Access Control enforcer will allow/deny a client application (for example an Android app) to send APDU to a Secure Element (SE) applet based on these rules
 </p>
 
 ## Steps
@@ -150,7 +150,7 @@ RULE #0 :
 
 **Make sure the SIM card is placed in the default/first SIM slot of the device (only for multi-sim capable devices)**
 
-Download the "CoIMS" app from play store (https://play.google.com/store/apps/details?id=com.sherle.coims). Then, run the app
+Download the [CoIMS](https://play.google.com/store/apps/details?id=com.sherle.coims) Carrier Config app from play store. Then, run the app
 
 Important points/values to note after running the app for this app to enable VoLTE
 
