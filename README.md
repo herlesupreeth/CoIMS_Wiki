@@ -129,13 +129,13 @@ To check the list of installed certificates use the following command
 
 ```
 # If SIM is not unlocked in Step 2
-$ gp --key-enc KIC1 --key-mac KID1 --key-dek KIK1 -acr-list
+$ gp --key-enc KIC1 --key-mac KID1 --key-dek KIK1 --acr-list-aram
 RULE #0 :
        AID  : FFFFFFFFFFFF
        HASH : E46872F28B350B7E1F140DE535C2A8D5804F0BE3
        APDU rule   : ALWAYS(0x01)
 # If SIM is unlocked in Step 2
-$ gp -acr-list
+$ gp --acr-list-aram
 RULE #0 :
        AID  : FFFFFFFFFFFF
        HASH : E46872F28B350B7E1F140DE535C2A8D5804F0BE3
