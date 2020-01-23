@@ -8,7 +8,7 @@ Guide for overriding IMS settings to force enable VoLTE/VoWiFi using Carrier Pri
 - Java v1.8
 
 ## My Setup
-- sysmoUSIM-SJS1-4ff USIM with ADM keys
+- sysmoUSIM-SJS1-4ff USIM with ADM keys (supports JavaCard 2.2.1 only)
 - OnePlus 5t UE with Android Pie
 - Gemalto SIM programmer
 
@@ -18,7 +18,7 @@ Guide for overriding IMS settings to force enable VoLTE/VoWiFi using Carrier Pri
 </p>
 
 <p align="justify">
-	<a href="https://github.com/bertrandmartel/aram-applet">Bertrand Martel</a> for ARA-M applet (applet.cap) - ARA-M implementation for JavaCards. ARA-M is an application (typically present on a SIM card) which manage access rules that are enforced by an Access Control Enforcer (typically present on Android device). The enforcer makes sure the rules from the ARAM are enforced. An access rule is composed of an AID, a certificate hash (SHA1/SHA256 of client application cert) and a set of rules. The Access Control enforcer will allow/deny a client application (for example an Android app) to send APDU to a Secure Element (SE) applet based on these rules
+	<a href="https://github.com/bertrandmartel">Bertrand Martel</a> for ARA-M applet (applet.cap) - ARA-M implementation for JavaCards. ARA-M is an application (typically present on a SIM card) which manage access rules that are enforced by an Access Control Enforcer (typically present on Android device). The enforcer makes sure the rules from the ARAM are enforced. An access rule is composed of an AID, a certificate hash (SHA1/SHA256 of client application cert) and a set of rules. The Access Control enforcer will allow/deny a client application (for example an Android app) to send APDU to a Secure Element (SE) applet based on these rules
 </p>
 
 ## Steps
