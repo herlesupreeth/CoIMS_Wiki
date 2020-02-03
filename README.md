@@ -158,6 +158,11 @@ Important points/values to note after running the app for this app to enable VoL
 - "SIM Carrier Id" must not be -1 (i.e Unknown Carrier)
 - "carrier_volte_provisioned_bool" must be true
 
+#### Step 6: Additional IMS settings only for Samsung and Mediatek chipset devices
+
+<p align="justify">
+	After installation of the app, access the options menu on the right hand top corner and select Samsung/Mediatek IMS Settings option based on your device chipset and edit the IMS settings accordingly to enable desired IMS features
+</p>
 
 ## Debugging
 Use adb debugging with filter for "ims" keyword
@@ -169,8 +174,4 @@ Use adb debugging with filter for "ims" keyword
 	- If PLMN is not on the following list (https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/master/assets/carrier_list.textpb)
 		Resolution: Refer the following link (https://source.android.com/devices/tech/config/carrierid#integrating_carrier_ids_with_carrierconfig)
 
-2. Some devices with Samsung Exynos chipset/ Mediatek chipset require ISIM, only USIM is not enough for SIP registrations
-
-3. Does not seem to work on Samsung devices with Exynos chipset
-
-4. If the SIM is placed in non-default SIM slot in a multi-SIM phones i.e. SIM in slot 1 (SIM slot 0 (default), SIM slot 1) of device
+2. If the SIM is placed in non-default SIM slot in a multi-SIM phones i.e. SIM in slot 1 (SIM slot 0 (default), SIM slot 1) of device
