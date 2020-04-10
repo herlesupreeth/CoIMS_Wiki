@@ -48,7 +48,7 @@ KIK1 | --key-dek
 </p>
 
 ```
-$ gp --key-enc KIC1 --key-mac KID1 --key-dek KIK1 -lvi
+$ gp --key-enc <KIC1> --key-mac <KID1> --key-dek <KIK1> -lvi
 ```
 
 #### Step 2: Unlock the SIM card for easier installation of applet as follows (Optional)
@@ -56,7 +56,7 @@ $ gp --key-enc KIC1 --key-mac KID1 --key-dek KIK1 -lvi
 **Proceed with caution when unlocking SIM card as it could brick your USIM/ISIM if incorrect KIC1, KID1 and KIK1 keys are used**
 
 ```
-$ gp --key-enc KIC1 --key-mac KID1 --key-dek KIK1 --unlock
+$ gp --key-enc <KIC1> --key-mac <KID1> --key-dek <KIK1> --unlock
 ```
 
 Example: A sysmoUSIM-SJS1-4ff USIM card with following keys is unlocked as follows
@@ -80,7 +80,7 @@ Install the ARA-M applet (applet.cap). The following command must execute withou
 
 ```
 # If SIM is not unlocked in Step 2
-$ gp --key-enc KIC1 --key-mac KID1 --key-dek KIK1 --install applet.cap
+$ gp --key-enc <KIC1> --key-mac <KID1> --key-dek <KIK1> --install applet.cap
 # If SIM is unlocked in Step 2
 $ gp --install applet.cap
 ```
@@ -95,7 +95,7 @@ In order to provide Carrier Privileges to Carrier Config app, push the above SHA
 
 ```
 # If SIM is not unlocked in Step 2
-$ gp --key-enc KIC1 --key-mac KID1 --key-dek KIK1 -a 00A4040009A00000015141434C0000 -a 80E2900033F031E22FE11E4F06FFFFFFFFFFFFC114E46872F28B350B7E1F140DE535C2A8D5804F0BE3E30DD00101DB080000000000000001
+$ gp --key-enc <KIC1> --key-mac <KID1> --key-dek <KIK1> -a 00A4040009A00000015141434C0000 -a 80E2900033F031E22FE11E4F06FFFFFFFFFFFFC114E46872F28B350B7E1F140DE535C2A8D5804F0BE3E30DD00101DB080000000000000001
 # If SIM is unlocked in Step 2
 $ gp -a 00A4040009A00000015141434C0000 -a 80E2900033F031E22FE11E4F06FFFFFFFFFFFFC114E46872F28B350B7E1F140DE535C2A8D5804F0BE3E30DD00101DB080000000000000001
 ```
@@ -129,7 +129,7 @@ To check the list of installed certificates use the following command
 
 ```
 # If SIM is not unlocked in Step 2
-$ gp --key-enc KIC1 --key-mac KID1 --key-dek KIK1 --acr-list-aram
+$ gp --key-enc <KIC1> --key-mac <KID1> --key-dek <KIK1> --acr-list-aram
 RULE #0 :
        AID  : FFFFFFFFFFFF
        HASH : E46872F28B350B7E1F140DE535C2A8D5804F0BE3
