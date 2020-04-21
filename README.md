@@ -3,7 +3,7 @@ Guide for overriding IMS settings to force enable VoLTE/VoWiFi using Carrier Pri
 
 ## Requirements
 - A programmable version of USIM/ISIM with KIC1, KID1 and KIK1, or *a non-programmable USIM/ISIM with ARA-M application but with option to push certficates to ARA-M via OTA*
-- VoLTE/VoWiFi capable phone with Android Pie or above
+- VoLTE/VoWiFi capable phone with Android Oreo (8.0) or above
 - PCSC, serial card reader (SIM card programmer)
 - Java v1.8
 
@@ -155,7 +155,7 @@ Download the [CoIMS](https://play.google.com/store/apps/details?id=com.sherle.co
 Important points/values to note after running the app for this app to enable VoLTE
 
 - "App has Carrier Privileges" must be true
-- "SIM Carrier Id" must not be -1 (i.e Unknown Carrier)
+- "SIM Carrier Id" must not be -1 (i.e Unknown Carrier) - **Not shown in Android 8.0 and 8.1 devices**
 - "carrier_volte_provisioned_bool" must be true
 
 #### Step 6: Additional IMS settings only for Samsung and Mediatek chipset devices
@@ -168,7 +168,7 @@ Important points/values to note after running the app for this app to enable VoL
 Use adb debugging with filter for "ims" keyword
 
 ## Potential reasons for this method not working
-1. If the value of CarrierIdentifier indicated in the app is -1 (i.e Unknown Carrier)
+1. If the value of CarrierIdentifier indicated in the app is -1 (i.e Unknown Carrier) - **Not shown in Android 8.0 and 8.1 devices**
 	- If PLMN is on the following list (https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/master/assets/carrier_list.textpb)
 		Resolution: Wait for vendor to release an update and hopefully it contains the updated carrier list
 	- If PLMN is not on the following list (https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/master/assets/carrier_list.textpb)
