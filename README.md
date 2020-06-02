@@ -167,6 +167,18 @@ Important points/values to note after running the app for this app to enable VoL
 ## Debugging
 Use adb debugging with filter for "ims" keyword
 
+## Note
+
+### To test whether VoWiFi is enabled or not (assuming un-trusted 3gpp access via WLAN)
+
+1. Program/Configure the PLMN of the SIM (and 4G network) to an operator who has wide deployment of VoWiFi (e.g. Airtel India (MCC: 404, MNC:45), Vodafone India, Reliance Jio India)
+
+OR
+
+1. Use a Samsung chipset based device, in which one can access the IMS settings. There, type in the ePDG DNS name or its IP address
+2. Setup a DNS to resolve epdg.pub.epc.mncXXX.mccXXX.3gppnetwork.org and make sure UE gets the DNS IP address when it gets connected to WiFi AP
+3. Have the setup required for VoWiFi ready (i.e. WiFi AP + ePDG + ePDG integrated with EPC) - More info about the architecture can be found [here](https://www.netmanias.com/en/post/oneshot/8127/lte-network-architecture-wi-fi-epdg/3gpp-based-lte-and-wi-fi-interworking-architecture-epdg-s2b)
+
 ## Potential reasons for this method not working
 1. If the value of CarrierIdentifier indicated in the app is -1 (i.e Unknown Carrier) - **Not shown in Android 8.0 and 8.1 devices**
 	- If PLMN is on the following list (https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/master/assets/carrier_list.textpb)
@@ -175,3 +187,4 @@ Use adb debugging with filter for "ims" keyword
 		Resolution: Refer the following link (https://source.android.com/devices/tech/config/carrierid#integrating_carrier_ids_with_carrierconfig)
 
 2. If the SIM is placed in non-default SIM slot in a multi-SIM phones i.e. SIM in slot 1 (SIM slot 0 (default), SIM slot 1) of device
+3. VoWiFi may not work on most devices because the ePDG address is still hard-coded in configuration files on the device and is not fetched from USIM
