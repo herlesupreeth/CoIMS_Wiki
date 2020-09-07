@@ -198,6 +198,12 @@ In order to provide Carrier Privileges to Carrier Config app, push the above SHA
 $ python shadysim.py --pcsc --kic <KIC1> --kid <KID1> --aram-apdu 80E2900033F031E22FE11E4F06FFFFFFFFFFFFC114E46872F28B350B7E1F140DE535C2A8D5804F0BE3E30DD00101DB080000000000000001
 ```
 
+#### Step 4: List certificates loaded onto ARA-M applet
+
+```
+$ python shadysim.py --pcsc --kic <KIC1> --kid <KID1> --aram-apdu 80CAFF4000
+```
+
 ## Debugging
 Use adb debugging with filter for "ims" keyword
 
