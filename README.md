@@ -171,43 +171,7 @@ Important points/values to note after running the app for this app to enable VoL
 #### Step 1: Clone the sim-tools repository
 
 ```
-$ git clone http://git.osmocom.org/sim/sim-tools/
-```
-
-#### Step 2: Apply the following patch to shadysim.py file in sim-tools repository
-
-```
-diff --git a/shadysim/shadysim.py b/shadysim/shadysim.py
-index bab254c..878b638 100755
---- a/shadysim/shadysim.py
-+++ b/shadysim/shadysim.py
-@@ -398,6 +398,7 @@ parser.add_argument('--set-phonebook-entry', nargs=4)
- parser.add_argument('--kic', default='')
- parser.add_argument('--kid', default='')
- parser.add_argument('--smpp', action='store_true')
-+parser.add_argument('--aram-apdu', default='')
- 
- args = parser.parse_args()
- 
-@@ -427,6 +428,18 @@ if not args.smpp:
-        print "ICCID: " + swap_nibbles(sc.read_binary(['3f00', '2fe2'])[0])
-        ac.send_terminal_profile()
- 
-+if len(args.aram_apdu) > 0:
-+       # Select the ARA-M applet from its AID
-+       aram_rv = rv = ac._tp.send_apdu('00A4040009A00000015141434C0000')
-+       if '9000' != aram_rv[1]:
-+               raise RuntimeError("SW match failed! Expected %s and got %s." % ('9000', aram_rv[1]))
-+       if '80CAFF4000' == args.aram_apdu:
-+               raise RuntimeError("Listing of ACR rules in ARA-M not supported yet")
-+       # Add/Delete Access rules list in ARA-M
-+       rv = ac._tp.send_apdu(args.aram_apdu)
-+       if '9000' != rv[1] and '6a88' != rv[1]:
-+               raise RuntimeError("SW match failed! Expected %s and got %s." % ('9000', rv[1]))
-+
- # for RFM testing
- #ac.test_rfm()
- #exit(0)
+$ git clone https://github.com/herlesupreeth/sim-tools
 ```
 
 #### List all the applets installed on the SIM
@@ -216,13 +180,13 @@ index bab254c..878b638 100755
 $ python shadysim.py --pcsc -t --kic <KIC1> --kid <KID1>
 ```
 
-#### Step 3: Copy the applet.cap file to sim-tools/shadysim folder and then install the applet
+#### Step 2: Copy the applet.cap file to sim-tools/shadysim folder and then install the applet
 
 ```
 $ python shadysim.py --pcsc -l applet.cap -i applet.cap  --kic <KIC1> --kid <KID1> --module-aid A00000015141434C00 --instance-aid A00000015141434C00
 ```
 
-#### Step 4: Insert the following certificate into ARA-M applet on the SIM
+#### Step 3: Insert the following certificate into ARA-M applet on the SIM
 
 The Carrier Config Android app is signed with following SHA1 key
 
