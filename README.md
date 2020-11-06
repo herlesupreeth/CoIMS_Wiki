@@ -221,10 +221,22 @@ OR
 
 ## Potential reasons for this method not working
 1. If the value of CarrierIdentifier indicated in the app is -1 (i.e Unknown Carrier) - **Not shown in Android 8.0 and 8.1 devices**
-	- If PLMN is on the following list (https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/master/assets/carrier_list.textpb)
+	- If PLMN is on the following lists with respect to Android version the phone is running on
+
+		https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/refs/heads/master/assets/latest_carrier_id/carrier_list.textpb
+
+		https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/refs/heads/master/assets/sdk28_carrier_id/carrier_list.textpb
+
+		https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/refs/heads/master/assets/sdk29_carrier_id/carrier_list.textpb
+
+		https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/refs/heads/master/assets/sdk30_carrier_id/carrier_list.textpb
+
 		Resolution: Wait for vendor to release an update and hopefully it contains the updated carrier list
-	- If PLMN is not on the following list (https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/master/assets/carrier_list.textpb)
-		Resolution: Refer the following link (https://source.android.com/devices/tech/config/carrierid#integrating_carrier_ids_with_carrierconfig)
+	- If PLMN is not on the above lists
+
+		Resolution: Refer the following link
+
+		https://source.android.com/devices/tech/config/carrierid#integrating_carrier_ids_with_carrierconfig
 
 2. If the SIM is placed in non-default SIM slot in a multi-SIM phones i.e. SIM in slot 1 (SIM slot 0 (default), SIM slot 1) of device
 3. VoWiFi may not work on most devices because the ePDG address is still hard-coded in configuration files on the device and is not fetched from USIM
