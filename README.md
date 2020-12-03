@@ -9,6 +9,7 @@ Guide for overriding IMS settings to force enable VoLTE/VoWiFi using Carrier Pri
 
 ## My Setup
 - sysmoUSIM-SJS1-4ff USIM with ADM keys (supports JavaCard 2.2.1 only)
+- sysmoISIM-SJA2 USIM + ISIM with ADM keys
 - OnePlus 5t UE with Android Pie
 - Gemalto SIM programmer
 
@@ -172,18 +173,29 @@ Important points/values to note after running the app for this app to enable VoL
 
 ```
 $ git clone https://github.com/herlesupreeth/sim-tools
+
+# Use shadysim.py if your SIM has ONLY USIM (not ISIM) application e.g. sysmoUSIM-SJS1-4ff
+# Use shadysim_isim.py if your SIM has USIM + ISIM application e.g. sysmoISIM-SJA2
 ```
 
 #### List all the applets installed on the SIM
 
 ```
+# If SIM has ONLY USIM application
 $ python shadysim.py --pcsc -t --kic <KIC1> --kid <KID1>
+
+# If SIM has USIM + ISIM application
+$ python shadysim_isim.py --pcsc -t --kic <KIC1> --kid <KID1>
 ```
 
 #### Step 2: Copy the applet.cap file to sim-tools/shadysim folder and then install the applet
 
 ```
+# If SIM has ONLY USIM application
 $ python shadysim.py --pcsc -l applet.cap -i applet.cap  --kic <KIC1> --kid <KID1> --module-aid A00000015141434C00 --instance-aid A00000015141434C00
+
+# If SIM has USIM + ISIM application
+$ python shadysim_isim.py --pcsc -l applet.cap -i applet.cap  --kic <KIC1> --kid <KID1> --module-aid A00000015141434C00 --instance-aid A00000015141434C00
 ```
 
 #### Step 3: Insert the following certificate into ARA-M applet on the SIM
@@ -195,13 +207,21 @@ SHA1: E4:68:72:F2:8B:35:0B:7E:1F:14:0D:E5:35:C2:A8:D5:80:4F:0B:E3
 In order to provide Carrier Privileges to Carrier Config app, push the above SHA1 certifcate as follows
 
 ```
+# If SIM has ONLY USIM application
 $ python shadysim.py --pcsc --kic <KIC1> --kid <KID1> --aram-apdu 80E2900033F031E22FE11E4F06FFFFFFFFFFFFC114E46872F28B350B7E1F140DE535C2A8D5804F0BE3E30DD00101DB080000000000000001
+
+# If SIM has USIM + ISIM application
+$ python shadysim_isim.py --pcsc --kic <KIC1> --kid <KID1> --aram-apdu 80E2900033F031E22FE11E4F06FFFFFFFFFFFFC114E46872F28B350B7E1F140DE535C2A8D5804F0BE3E30DD00101DB080000000000000001
 ```
 
 #### Step 4: List certificates loaded onto ARA-M applet
 
 ```
+# If SIM has ONLY USIM application
 $ python shadysim.py --pcsc --kic <KIC1> --kid <KID1> --aram-apdu 80CAFF4000
+
+# If SIM has USIM + ISIM application
+$ python shadysim_isim.py --pcsc --kic <KIC1> --kid <KID1> --aram-apdu 80CAFF4000
 ```
 
 ## Debugging
