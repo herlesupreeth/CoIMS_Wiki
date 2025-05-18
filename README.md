@@ -6,6 +6,8 @@ Guide for overriding IMS settings to force enable VoLTE/VoWiFi using Carrier Pri
 - VoLTE/VoWiFi capable phone with Android Oreo (8.0) or above
 - PCSC, serial card reader (SIM card programmer)
 - Java v1.8
+- Lastest pySim software - https://github.com/osmocom/pysim
+	- Manual - https://downloads.osmocom.org/docs/pysim/master/osmopysim-usermanual.pdf
 
 ## My Setup
 - sysmoUSIM-SJS1-4ff USIM with ADM keys (supports JavaCard 2.2.1 only)
@@ -15,12 +17,18 @@ Guide for overriding IMS settings to force enable VoLTE/VoWiFi using Carrier Pri
 
 ## Big shout out and credits to following people for their awesome work
 <p align="justify">
-	<a href="https://github.com/martinpaljak">Martin Paljak</a> for GlobalPlatformPro (gp.jar) - A tool to load and manage applets on compatible JavaCards from command line
+	<a href="https://github.com/martinpaljak">Martin Paljak</a> for GlobalPlatformPro (gp.jar) - A tool to load and manage applets on compatible JavaCards from command line.
 </p>
 
 <p align="justify">
-	<a href="https://github.com/bertrandmartel">Bertrand Martel</a> for ARA-M applet (applet.cap) - ARA-M implementation for JavaCards. ARA-M is an application (typically present on a SIM card) which manage access rules that are enforced by an Access Control Enforcer (typically present on Android device). The enforcer makes sure the rules from the ARAM are enforced. An access rule is composed of an AID, a certificate hash (SHA1/SHA256 of client application cert) and a set of rules. The Access Control enforcer will allow/deny a client application (for example an Android app) to send APDU to a Secure Element (SE) applet based on these rules
+	<a href="https://github.com/bertrandmartel">Bertrand Martel</a> for ARA-M applet (applet.cap) - ARA-M implementation for JavaCards. ARA-M is an application (typically present on a SIM card) which manage access rules that are enforced by an Access Control Enforcer (typically present on Android device). The enforcer makes sure the rules from the ARAM are enforced. An access rule is composed of an AID, a certificate hash (SHA1/SHA256 of client application cert) and a set of rules. The Access Control enforcer will allow/deny a client application (for example an Android app) to send APDU to a Secure Element (SE) applet based on these rules.
 </p>
+
+<p align="justify">
+	<a href="https://github.com/osmocom/pysim">Entire pySim team</a> for providing a feature rich software to program anything and everything on a SIM card.
+</p>
+
+> **⚠️ Warning:** While using latest Sysmocom SIM cards (e.g. sysmoISIM-SJA5), the ARA-M applet is already pre-provisioned. You can skip directly to **Step 4** below.
 
 ## Steps
 
@@ -126,7 +134,15 @@ The split-up of above APDU sent to SIM card is as follows
 |         | |      | |                  |V|0000000000000001                        |
 </pre>
 
-To check the list of installed certificates use the following command
+**Alternatively, pySim-Shell can be used to push the certificate onto ARA-M applet**
+
+```
+pySIM-shell (00:MF)> select ADF.ARA-M
+null
+pySIM-shell (00:MF/ADF.ARA-M)> aram_store_ref_ar_do --aid FFFFFFFFFFFF --device-app-id E46872F28B350B7E1F140DE535C2A8D5804F0BE3 --apdu-always --android-permissions 0000000000000001
+```
+
+#### Step 5: To check the list of installed certificates
 
 ```
 # If SIM is not unlocked in Step 2
@@ -147,7 +163,49 @@ RULE #0 :
 	<i>If you have a non-programmable USIM/ISIM with ARA-M application and have option to push certficates to ARA-M via OTA, push the above SHA1 certificate on to the SIM</i>
 </p>
 
-#### Step 5: Install the Carrier Config Android app from Play Store
+**Alternatively, pySim-Shell can be used to view installed certificates**
+
+```
+pySIM-shell (00:MF)> select ADF.ARA-M
+null
+pySIM-shell (00:MF/ADF.ARA-M)>  aram_get_all
+[
+    {
+        "response_all_ref_ar_do": [
+            {
+                "ref_ar_do": [
+                    {
+                        "ref_do": [
+                            {
+                                "aid_ref_do": "ffffffffffff"
+                            },
+                            {
+                                "dev_app_id_ref_do": "e46872f28b350b7e1f140de535c2a8d5804f0be3"
+                            }
+                        ]
+                    },
+                    {
+                        "ar_do": [
+                            {
+                                "apdu_ar_do": {
+                                    "generic_access_rule": "always"
+                                }
+                            },
+                            {
+                                "perm_ar_do": {
+                                    "permissions": "0000000000000001"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
+```
+
+#### Step 6: Install the Carrier Config Android app from Play Store
 
 **Make sure the SIM card is placed in the default/first SIM slot of the device (only for multi-sim capable devices)**
 
@@ -159,7 +217,7 @@ Important points/values to note after running the app for this app to enable VoL
 - "SIM Carrier Id" must not be -1 (i.e Unknown Carrier) - **Not shown in Android 8.0 and 8.1 devices**
 - "carrier_volte_provisioned_bool" must be true
 
-#### Step 6: Additional IMS settings only for Samsung and Mediatek chipset devices
+#### Step 7: Additional IMS settings only for Samsung and Mediatek chipset devices
 
 <p align="justify">
 	After installation of the app, access the options menu on the right hand top corner and select Samsung/Mediatek IMS Settings option based on your device chipset and edit the IMS settings accordingly to enable desired IMS features
@@ -223,6 +281,10 @@ $ python shadysim.py --pcsc --kic <KIC1> --kid <KID1> --aram-apdu 80CAFF4000
 # If SIM has USIM + ISIM application
 $ python shadysim_isim.py --pcsc --kic <KIC1> --kid <KID1> --aram-apdu 80CAFF4000
 ```
+
+## Troubleshooting
+
+For pySim and Sysmocom SIM cards related issues please use the following discourse - https://discourse.osmocom.org/c/sim-card-technology/
 
 ## Debugging
 Use adb debugging with filter for "ims" keyword
