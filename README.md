@@ -209,15 +209,13 @@ pySIM-shell (00:MF/ADF.ARA-M)>  aram_get_all
 
 **Make sure the SIM card is placed in the default/first SIM slot of the device (only for multi-sim capable devices)**
 
-Download the [CoIMS](https://play.google.com/store/apps/details?id=com.sherle.coims) Carrier Config app from play store. Then, run the app
+Download the [CoIMS](https://play.google.com/store/apps/details?id=com.sherle.coims) Carrier Config app from play store. Then, run the app.
 
-Important points/values to note after running the app for this app to enable VoLTE
-
-- "App has Carrier Privileges" must be true
-- "SIM Carrier Id" must not be -1 (i.e Unknown Carrier) - **Not shown in Android 8.0 and 8.1 devices**
-- "carrier_volte_provisioned_bool" must be true
+In the app, select **Force Enable IMS** to enable VoLTE/VoWiFi. The app will check for Carrier Privileges and if the app has Carrier Privileges, it will enable VoLTE/VoWiFi on the device.
 
 #### Step 7: Additional IMS settings only for Samsung and Mediatek chipset devices
+
+**Samsung IMS settings secret menu no longer works on devices running Android 10 and above. Use method mentioned here - https://xdaforums.com/t/tutorial-guide-how-to-access-ims-settings-on-modern-samsung-devices-without-computer.4646908/ instead.**
 
 <p align="justify">
 	After installation of the app, access the options menu on the right hand top corner and select Samsung/Mediatek IMS Settings option based on your device chipset and edit the IMS settings accordingly to enable desired IMS features
@@ -302,7 +300,7 @@ OR
 3. Have the setup required for VoWiFi ready (i.e. WiFi AP + ePDG + ePDG integrated with EPC) - More info about the architecture can be found [here](https://www.netmanias.com/en/post/oneshot/8127/lte-network-architecture-wi-fi-epdg/3gpp-based-lte-and-wi-fi-interworking-architecture-epdg-s2b)
 
 ## Potential reasons for this method not working
-1. If the value of CarrierIdentifier indicated in the app is -1 (i.e Unknown Carrier) - **Not shown in Android 8.0 and 8.1 devices**
+1. If the message in CoIMS show **Unrecognised Carrier Id. App may not work as intended** it means there is no CarrierId for that PLMN in AOSP - **Not shown in Android 8.0 and 8.1 devices**
 	- If PLMN is on the following lists with respect to Android version the phone is running on
 
 		https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/refs/heads/master/assets/latest_carrier_id/carrier_list.textpb
@@ -313,12 +311,13 @@ OR
 
 		https://android.googlesource.com/platform/packages/providers/TelephonyProvider/+/refs/heads/master/assets/sdk30_carrier_id/carrier_list.textpb
 
-		Resolution: Wait for vendor to release an update and hopefully it contains the updated carrier list
+		Solution: Wait for vendor to release an update and hopefully it contains the updated carrier list
 	- If PLMN is not on the above lists
 
-		Resolution: Refer the following link
+		Solution: Refer the following link
 
 		https://source.android.com/devices/tech/config/carrierid#integrating_carrier_ids_with_carrierconfig
 
 2. If the SIM is placed in non-default SIM slot in a multi-SIM phones i.e. SIM in slot 1 (SIM slot 0 (default), SIM slot 1) of device
+    - Solution: Place the SIM in default SIM slot (i.e. SIM slot 0) of the device
 3. VoWiFi may not work on most devices because the ePDG address is still hard-coded in configuration files on the device and is not fetched from USIM
